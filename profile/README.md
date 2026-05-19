@@ -36,6 +36,18 @@ consumes.
 |---|---|---|
 | [`subms`](https://github.com/submillisecond/subms) | The library. `subms` on [crates.io](https://crates.io/crates/subms); `com.submillisecond:subms` on [Maven Central](https://central.sonatype.com/artifact/com.submillisecond/subms). | [![ci](https://github.com/submillisecond/subms/actions/workflows/ci.yml/badge.svg)](https://github.com/submillisecond/subms/actions/workflows/ci.yml) |
 
+### The cookbook
+
+16 dual-language Rust + Java recipes, 3 Java guides, all writeups + perf
+JSON, and the discovery CLI - one repo, one clone, the whole working
+notebook. Every recipe ships >= 90% line coverage, a documented quality-bar
+contract (reference impl + claim conditions + non-claims), and an asserted
+sub-millisecond p99 in CI.
+
+| repo | one-line | status |
+|---|---|---|
+| [`subms-cookbook`](https://github.com/submillisecond/subms-cookbook) | Recipes (`subms-bloom-filter`, `subms-lsm-tree`, `subms-hyperloglog`, ...) + guides + content + `@submillisecond/subms` CLI. | [![ci](https://github.com/submillisecond/subms-cookbook/actions/workflows/ci.yml/badge.svg)](https://github.com/submillisecond/subms-cookbook/actions/workflows/ci.yml) |
+
 ### The website
 
 The Next.js site that renders [submillisecond.com](https://submillisecond.com) -
