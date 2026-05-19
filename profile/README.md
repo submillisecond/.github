@@ -16,7 +16,7 @@ that catches the regression before it ships.
 
 <br/>
 
-*16 dual-language Rust + Java recipes. 5 GitHub Actions. 1 JSON contract.*
+*16 dual-language Rust + Java recipes. 1 perf harness. 5 GitHub Actions. 1 JSON contract.*
 *Every number measured; every claim reproducible; every regression gated.*
 
 </div>
@@ -24,6 +24,28 @@ that catches the regression before it ships.
 ---
 
 ## What we ship
+
+### The harness library
+
+A zero-dependency perf-test harness for Rust and Java that records timed
+samples per stage, computes percentiles, supports coordinated-omission
+correction, and emits a stable JSON contract the rest of the ecosystem
+consumes.
+
+| repo | one-line | status |
+|---|---|---|
+| [`subms`](https://github.com/submillisecond/subms) | The library. `subms` on [crates.io](https://crates.io/crates/subms); `com.submillisecond:subms` on [Maven Central](https://central.sonatype.com/artifact/com.submillisecond/subms). | [![ci](https://github.com/submillisecond/subms/actions/workflows/ci.yml/badge.svg)](https://github.com/submillisecond/subms/actions/workflows/ci.yml) |
+
+### The website
+
+The Next.js site that renders [submillisecond.com](https://submillisecond.com) -
+cookbook, blog, glossary, and topic pages. Statically exported to Cloudflare
+for prod; local dev runs an admin layer for editing posts + glossary entries
+straight to disk.
+
+| repo | one-line | status |
+|---|---|---|
+| [`subms-ui`](https://github.com/submillisecond/subms-ui) | Next.js 15 + React 19. Renders the cookbook content + perf JSON; deploys to Cloudflare Workers via `ks publish subms-ui:ui`. | [![ci](https://github.com/submillisecond/subms-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/submillisecond/subms-ui/actions/workflows/ci.yml) |
 
 ### Perf-CI gate suite (GitHub Actions)
 
