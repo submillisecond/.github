@@ -1,12 +1,115 @@
-## Hi there 👋
+<div align="center">
 
-<!--
+# submillisecond
 
-**Here are some ideas to get you started:**
+**A working toolkit for engineers who care about p99.9.**
 
-🙋‍♀️ A short introduction - what is your organization all about?
-🌈 Contribution guidelines - how can the community get involved?
-👩‍💻 Useful resources - where can the community find your docs? Is there anything else the community should know?
-🍿 Fun facts - what does your team eat for breakfast?
-🧙 Remember, you can do mighty things with the power of [Markdown](https://docs.github.com/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
--->
+The brand behind the [submillisecond.com](https://submillisecond.com) cookbook
+and the open-source **perf-CI gate suite** - five composable GitHub Actions
+that turn any bench into a status-check tollgate.
+
+[![cookbook](https://img.shields.io/badge/cookbook-submillisecond.com-blue?style=flat-square)](https://submillisecond.com/cookbook)
+[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/submillisecond/subms-actions/blob/main/LICENSE)
+[![status](https://img.shields.io/badge/status-pre--release-orange?style=flat-square)](#status)
+
+</div>
+
+## What we ship
+
+### Perf-CI gate suite (GitHub Actions)
+
+Composable actions that diff perf JSON against a baseline, post a sticky PR
+comment with per-stage deltas, fail the status check on regression, push to
+13 downstream sinks (Slack/Datadog/Prometheus/S3/...), and detect slow
+drift across a rolling window.
+
+| repo | one-line | status |
+|---|---|---|
+| [`subms-action-bench`](https://github.com/submillisecond/subms-action-bench) | Run a bench command, capture JSON, validate, retry on flake. | [![self-test](https://github.com/submillisecond/subms-action-bench/actions/workflows/self-test.yml/badge.svg)](https://github.com/submillisecond/subms-action-bench/actions/workflows/self-test.yml) |
+| [`subms-action-diff`](https://github.com/submillisecond/subms-action-diff) | The gate. Baseline vs candidate -> sticky PR comment + status check. | [![self-test](https://github.com/submillisecond/subms-action-diff/actions/workflows/self-test.yml/badge.svg)](https://github.com/submillisecond/subms-action-diff/actions/workflows/self-test.yml) |
+| [`subms-action-diff-aggregate`](https://github.com/submillisecond/subms-action-diff-aggregate) | Roll N matrix diffs into one PR comment + one verdict. | [![self-test](https://github.com/submillisecond/subms-action-diff-aggregate/actions/workflows/self-test.yml/badge.svg)](https://github.com/submillisecond/subms-action-diff-aggregate/actions/workflows/self-test.yml) |
+| [`subms-action-diff-sink`](https://github.com/submillisecond/subms-action-diff-sink) | Push diff JSON to 13 sinks: Slack, HTTP, S3, GCS, Azure, Prometheus, InfluxDB, Datadog, Splunk, NewRelic, Honeycomb, file, stdout. | [![self-test](https://github.com/submillisecond/subms-action-diff-sink/actions/workflows/self-test.yml/badge.svg)](https://github.com/submillisecond/subms-action-diff-sink/actions/workflows/self-test.yml) |
+| [`subms-action-drift`](https://github.com/submillisecond/subms-action-drift) | Detect slow drift (Welford rolling mean +/- k*sigma). | [![self-test](https://github.com/submillisecond/subms-action-drift/actions/workflows/self-test.yml/badge.svg)](https://github.com/submillisecond/subms-action-drift/actions/workflows/self-test.yml) |
+| [`subms-actions`](https://github.com/submillisecond/subms-actions) | Umbrella - reusable workflow + pre-commit hook + shared scripts + suite docs. | [![self-test](https://github.com/submillisecond/subms-actions/actions/workflows/self-test.yml/badge.svg)](https://github.com/submillisecond/subms-actions/actions/workflows/self-test.yml) |
+
+## Why use it
+
+- **One JSON shape across runtimes.** Rust + Java emit it natively (via the
+  `subms` crate / jar); JMH, Criterion, HdrHistogram plug in via ~60-LOC
+  adapters. One pipeline accepts them all.
+- **Status-check tollgate.** The action fails the PR's check on regression -
+  branch-protection rules can block merges automatically.
+- **Sticky PR comments.** Re-runs and force-pushes update the same comment.
+  No 32-comment matrix spam.
+- **Drift detection.** Catches "p99 has been creeping +1 %/week for 8 weeks"
+  that base-ref diffing misses.
+- **Enterprise-grade transport.** HTTPS_PROXY / mTLS / custom CA bundles /
+  retry-with-backoff / PII scrubbing.
+- **Zero npm install.** Composite actions + Node std-lib only. Works on any
+  GitHub runner without dependency setup.
+
+## Quickstart
+
+Three-step CI gate for a Rust crate:
+
+```yaml
+# .github/workflows/perf.yml
+name: perf
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  diff:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 2 }
+
+      - name: Snapshot baseline
+        run: git show ${{ github.event.pull_request.base.sha }}:perf/myworkload.rust.json > baseline.json
+
+      - name: Use PR perf JSON
+        run: cp perf/myworkload.rust.json candidate.json
+
+      - uses: submillisecond/subms-action-diff@v0
+        with:
+          baseline: baseline.json
+          candidate: candidate.json
+          threshold-pct: "15"
+```
+
+Or one call wraps bench -> diff -> sink -> drift via the
+[reusable workflow](https://github.com/submillisecond/subms-actions/blob/main/.github/workflows/subms-perf-suite.yml).
+
+## Cookbook
+
+The [submillisecond.com cookbook](https://submillisecond.com/cookbook) is a
+working notebook of low-latency engineering. 16 dual-language Rust + Java
+recipes that hit sub-millisecond at p99 - bloom / cuckoo / HLL / count-min /
+HDR-histogram / SPSC / MPSC / rate-limiter / timer-wheel / arena / ART /
+treap / LSM / segment-reader / merge-iterator / block-cache. Each comes with
+a quality bar contract, >= 90 % test coverage, and real measured bench
+numbers from the [subms perf harness](https://submillisecond.com/cookbook/guides/subms-perf-harness).
+
+## Status
+
+**Pre-release.** The actions are functionally complete, smoke-tested via
+their own self-test workflows, and ready for use. They have not yet been
+through real-world adoption beyond the cookbook itself. Bug reports welcome.
+
+Releases follow semver. Float to a major tag (`@v0`) for auto-patches; pin to
+an exact tag (`@v0.1.0`) for supply-chain audit.
+
+## Contact
+
+- Web: [submillisecond.com](https://submillisecond.com)
+- Terms: [submillisecond.com/terms](https://submillisecond.com/terms)
+- Security: see each repo's `SECURITY.md` for private vulnerability reporting.
+
+---
+
+<sub>Released under the [MIT License](https://github.com/submillisecond/subms-actions/blob/main/LICENSE). The submillisecond name and logo are not registered trademarks; use in editorial and reference contexts is encouraged, use in product names that imply endorsement is not.</sub>
