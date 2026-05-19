@@ -2,17 +2,26 @@
 
 # submillisecond
 
-**A working toolkit for engineers who care about p99.9.**
+### Hold the line on p99.
 
-The brand behind the [submillisecond.com](https://submillisecond.com) cookbook
-and the open-source **perf-CI gate suite** - five composable GitHub Actions
-that turn any bench into a status-check tollgate.
+A working notebook of sub-millisecond data structures - and the perf-CI gate
+that catches the regression before it ships.
 
-[![cookbook](https://img.shields.io/badge/cookbook-submillisecond.com-blue?style=flat-square)](https://submillisecond.com/cookbook)
-[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/submillisecond/subms-actions/blob/main/LICENSE)
-[![status](https://img.shields.io/badge/status-pre--release-orange?style=flat-square)](#status)
+<br/>
+
+[![cookbook](https://img.shields.io/badge/-cookbook-1f6feb?style=for-the-badge&logo=jupyter&logoColor=white&labelColor=0d1117)](https://submillisecond.com/cookbook)
+[![actions suite](https://img.shields.io/badge/-perf--CI%20gate-238636?style=for-the-badge&logo=githubactions&logoColor=white&labelColor=0d1117)](https://github.com/submillisecond/subms-actions)
+[![license MIT](https://img.shields.io/badge/-MIT-9d2235?style=for-the-badge&labelColor=0d1117)](https://github.com/submillisecond/subms-actions/blob/main/LICENSE)
+[![status](https://img.shields.io/badge/-pre--release-d29922?style=for-the-badge&labelColor=0d1117)](#status)
+
+<br/>
+
+*16 dual-language Rust + Java recipes. 5 GitHub Actions. 1 JSON contract.*
+*Every number measured; every claim reproducible; every regression gated.*
 
 </div>
+
+---
 
 ## What we ship
 
