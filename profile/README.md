@@ -32,9 +32,9 @@ samples per stage, computes percentiles, supports coordinated-omission
 correction, and emits a stable JSON contract the rest of the ecosystem
 consumes.
 
-| repo | one-line | status |
-|---|---|---|
-| [`subms`](https://github.com/submillisecond/subms) | The library. `subms` on [crates.io](https://crates.io/crates/subms); `com.submillisecond:subms` on [Maven Central](https://central.sonatype.com/artifact/com.submillisecond/subms). | [![ci](https://github.com/submillisecond/subms/actions/workflows/ci.yml/badge.svg)](https://github.com/submillisecond/subms/actions/workflows/ci.yml) |
+| repo | one-line | latest | status |
+|---|---|---|---|
+| [`subms`](https://github.com/submillisecond/subms) | The library. `subms` on crates.io; `com.submillisecond:subms` on Maven Central. | [![crates.io](https://img.shields.io/crates/v/subms.svg?label=crates.io&logo=rust)](https://crates.io/crates/subms) [![maven central](https://img.shields.io/maven-central/v/com.submillisecond/subms.svg?label=maven%20central&logo=apache-maven)](https://central.sonatype.com/artifact/com.submillisecond/subms) | [![ci](https://github.com/submillisecond/subms/actions/workflows/ci.yml/badge.svg)](https://github.com/submillisecond/subms/actions/workflows/ci.yml) |
 
 ### The cookbook
 
@@ -44,9 +44,9 @@ notebook. Every recipe ships >= 90% line coverage, a documented quality-bar
 contract (reference impl + claim conditions + non-claims), and an asserted
 sub-millisecond p99 in CI.
 
-| repo | one-line | status |
-|---|---|---|
-| [`subms-cookbook`](https://github.com/submillisecond/subms-cookbook) | Recipes (`subms-bloom-filter`, `subms-lsm-tree`, `subms-hyperloglog`, ...) + guides + content + `@submillisecond/subms` CLI. | [![ci](https://github.com/submillisecond/subms-cookbook/actions/workflows/ci.yml/badge.svg)](https://github.com/submillisecond/subms-cookbook/actions/workflows/ci.yml) |
+| repo | one-line | latest | status |
+|---|---|---|---|
+| [`subms-cookbook`](https://github.com/submillisecond/subms-cookbook) | 16 recipes + 3 guides + content + `@submillisecond/subms` CLI. | [![release](https://img.shields.io/github/v/release/submillisecond/subms-cookbook?label=release)](https://github.com/submillisecond/subms-cookbook/releases) [![bloom](https://img.shields.io/crates/v/subms-bloom-filter.svg?label=subms-bloom-filter&logo=rust)](https://crates.io/crates/subms-bloom-filter) | [![ci](https://github.com/submillisecond/subms-cookbook/actions/workflows/ci.yml/badge.svg)](https://github.com/submillisecond/subms-cookbook/actions/workflows/ci.yml) |
 
 ### The website
 
@@ -55,9 +55,9 @@ cookbook, blog, glossary, and topic pages. Statically exported to Cloudflare
 for prod; local dev runs an admin layer for editing posts + glossary entries
 straight to disk.
 
-| repo | one-line | status |
-|---|---|---|
-| [`subms-ui`](https://github.com/submillisecond/subms-ui) | Next.js 15 + React 19. Renders the cookbook content + perf JSON; deploys to Cloudflare Workers via `ks publish subms-ui:ui`. | [![ci](https://github.com/submillisecond/subms-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/submillisecond/subms-ui/actions/workflows/ci.yml) |
+| repo | one-line | latest | status |
+|---|---|---|---|
+| [`subms-ui`](https://github.com/submillisecond/subms-ui) | Next.js 15 + React 19. Renders the cookbook content + perf JSON at [submillisecond.com](https://submillisecond.com); static export deploys to Cloudflare. | [![release](https://img.shields.io/github/v/release/submillisecond/subms-ui?label=release&include_prereleases)](https://github.com/submillisecond/subms-ui/releases) | [![ci](https://github.com/submillisecond/subms-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/submillisecond/subms-ui/actions/workflows/ci.yml) |
 
 ### Perf-CI gate suite (GitHub Actions)
 
@@ -136,7 +136,7 @@ recipes that hit sub-millisecond at p99 - bloom / cuckoo / HLL / count-min /
 HDR-histogram / SPSC / MPSC / rate-limiter / timer-wheel / arena / ART /
 treap / LSM / segment-reader / merge-iterator / block-cache. Each comes with
 a quality bar contract, >= 90 % test coverage, and real measured bench
-numbers from the [subms perf harness](https://submillisecond.com/cookbook/guides/subms-perf-harness).
+numbers from the [subms perf harness](https://submillisecond.com/cookbook/primers/subms-perf-harness).
 
 ## Status
 
